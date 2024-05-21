@@ -20,6 +20,21 @@ def unauthorized() -> str:
     abort(401, description='Unauthorized')
 
 
+@app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+def forbidden() -> str:
+    """ Return a 403 Forbidden error
+
+    This view is used when the user is not authorized
+    to access a protected resource. The user will
+    receive a 403 error with a description of 'Forbidden'.
+
+    Returns:
+      str: A JSON string with a 403 error and
+      'Forbidden' as the description.
+    """
+    abort(403, description='Forbidden')
+
+
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status() -> str:
     """ GET /api/v1/status
