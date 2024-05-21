@@ -5,6 +5,21 @@ from flask import jsonify, abort
 from api.v1.views import app_views
 
 
+@app_views.route('/unauthorized', methods=['GET'], strict_slashes=False)
+def unauthorized() -> str:
+    """ Return a 401 Unauthorized error
+
+    This view is used when the user is not authorized
+    to access a protected resource. The user will
+    receive a 401 error with a description of 'Unauthorized'.
+
+    Returns:
+      str: A JSON string with a 401 error and
+      'Unauthorized' as the description.
+    """
+    abort(401, description='Unauthorized')
+
+
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status() -> str:
     """ GET /api/v1/status
