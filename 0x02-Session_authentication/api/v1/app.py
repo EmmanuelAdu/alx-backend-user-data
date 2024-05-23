@@ -23,23 +23,24 @@ elif AUTH_TYPE == "basic_auth":
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
 
-
 @app.before_request
 def before_request():
     """ Before request handler
     """
     if auth is None:
-        return
-    excluded_paths = [
-        '/api/v1/status/',
-        '/api/v1/unauthorized/',
-        '/api/v1/forbidden/'
-    ]
-    if auth.require_auth(request.path, excluded_paths):
-        if auth.authorization_header(request) is None:
-            abort(401, description='Unauthorized')
-        if auth.current_user(request) is None:
-            abort(403, description='Forbidden')
+        pass
+    else:
+        setattr(request, "current_user", auth.current_user(request))
+        excluded_paths = [
+            '/api/v1/status/',
+            '/api/v1/unauthorized/',
+            '/api/v1/forbidden/'
+        ]
+        if auth.require_auth(request.path, excluded_paths):
+            if auth.authorization_header(request) is None:
+                abort(401, description='Unauthorized')
+            if auth.current_user(request) is None:
+                abort(403, description='Forbidden')
 
 
 @app.errorhandler(404)
