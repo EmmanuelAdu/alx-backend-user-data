@@ -267,3 +267,4 @@ if __name__ == "__main__":
     update_password(EMAIL, reset_token, NEW_PASSWD)
     log_in(EMAIL, NEW_PASSWD)
 Run python main.py. If everything is correct, you should see no output.
+
